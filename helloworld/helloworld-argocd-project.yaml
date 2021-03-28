@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helloworld
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/duynguyenhoang/argo-cd-101.git
+    targetRevision: HEAD
+    path: helloworld
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: helloworld

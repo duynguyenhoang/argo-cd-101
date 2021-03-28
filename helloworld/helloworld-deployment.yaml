@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  namespace: k102
+spec:
+  selector:
+    matchLabels:
+      run: hello-world
+      tier: backend
+      version: "v1.0"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: hello-world
+        tier: backend
+        version: "v1.0"
+    spec:
+      containers:
+      - name: hello-world
+        image: hello-world:1.0
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "250m"
+          limits:
+            memory: "100Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+  namespace: k102
+  labels:
+    run: hello-world
+    version: "v1.0"
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: hello-world
+    version: "v1.0"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: helloworld-demo
+  namespace: k102
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+
+  # file-like keys
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true
