@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: hello-world:1.0
+        image: hello-world:1.2
         ports:
         - containerPort: 8080
         resources:
@@ -55,14 +55,14 @@ metadata:
   namespace: k102
 data:
   # property-like keys; each key maps to a simple value
-  player_initial_lives: "3"
+  player_initial_lives: "5"
   ui_properties_file_name: "user-interface.properties"
 
   # file-like keys
   game.properties: |
     enemy.types=aliens,monsters
-    player.maximum-lives=5
+    player.maximum-lives=50
   user-interface.properties: |
     color.good=purple
     color.bad=yellow
-    allow.textmode=true
+    allow.textmode=false
